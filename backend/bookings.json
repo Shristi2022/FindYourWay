@@ -1,0 +1,76 @@
+[
+  {
+    "_id": "1777120728192",
+    "name": "Test",
+    "email": "test@test.com",
+    "phone": "1234567890",
+    "age": 25,
+    "gender": "Male",
+    "summary": "Test summary",
+    "ticketId": "FYW-1777120728192",
+    "status": "Confirmed",
+    "createdAt": "2026-04-25T12:38:48.192Z"
+  },
+  {
+    "_id": "1777120772016",
+    "name": "shristi ",
+    "email": "25mdsml007@student.rru.ac.in",
+    "phone": "7400677094",
+    "age": 23,
+    "gender": "Female",
+    "summary": "Delhi to Jaipur • Flight • Travel Time: 1h 30m • ₹1666",
+    "ticketId": "FYW-1777120772016",
+    "status": "Canceled",
+    "createdAt": "2026-04-25T12:39:32.016Z"
+  },
+  {
+    "_id": "1777199984851",
+    "name": "shristi sahu",
+    "email": "shristisahu2225@gmail.com",
+    "phone": "7400677094",
+    "age": 23,
+    "gender": "Female",
+    "summary": "Ahmedabad to Ajmer • Flight • Travel Time: 1h 30m • ₹3118",
+    "ticketId": "FYW-1777199984851",
+    "status": "Confirmed",
+    "createdAt": "2026-04-26T10:39:44.851Z"
+  },
+  {
+    "_id": "1777200249095",
+    "name": "shristi sahu",
+    "email": "shristisahu2225@gmail.com",
+    "phone": "07400677094",
+    "age": 23,
+    "gender": "Female",
+    "summary": "Ahmedabad to Aligarh • Flight • Travel Time: 1h 40m • ₹5595",
+    "ticketId": "FYW-1777200249095",
+    "status": "Confirmed",
+    "createdAt": "2026-04-26T10:44:09.095Z"
+  },
+  {
+    "_id": "1777223911298",
+    "userId": "1777213453679",
+    "name": "shristi sahu",
+    "email": "shristisahu2225@gmail.com",
+    "phone": "7400677094",
+    "age": 23,
+    "gender": "Female",
+    "summary": "Delhi to Jaipur • Flight • Travel Time: 1h 30m • ₹1666",
+    "ticketId": "FYW-1777223911298",
+    "status": "Confirmed",
+    "createdAt": "2026-04-26T17:18:31.298Z"
+  },
+  {
+    "_id": "1777274191829",
+    "userId": "1777273965492",
+    "name": "shristi ",
+    "email": "25mdsml007@student.rru.ac.in",
+    "phone": "7400677094",
+    "age": 23,
+    "gender": "Female",
+    "summary": "Ahmedabad to Chhattisgarh • Bus • Travel Time: 16h 7m • ₹1675",
+    "ticketId": "FYW-1777274191829",
+    "status": "Confirmed",
+    "createdAt": "2026-04-27T07:16:31.829Z"
+  }
+]

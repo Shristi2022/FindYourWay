@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindYourWay - Travel Route Search</title>
+    <!-- Modern font from Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Boxicons (Icons) -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Discover and compare multimodal travel routes with FindYourWay.">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo" id="logo-home">
+            <i class='bx bxs-navigation'></i> FindYourWay
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="active" id="nav-home">Home</a>
+            <a href="#" id="nav-history" style="display: none;">My Tickets</a>
+            <a href="#" id="nav-about">About</a>
+            <a href="#" id="nav-contact">Contact</a>
+            <a href="#" id="nav-auth" class="btn btn-primary" style="color: white; padding: 8px 15px; margin-left: 10px;">Login</a>
+            <a href="#" id="nav-logout" class="btn btn-outline" style="display: none; padding: 8px 15px; margin-left: 10px; color: var(--clr-primary); border: 1px solid var(--clr-primary);">Logout</a>
+        </nav>
+    </header>
+
+    <main id="app-container">
+        <!-- HOME PAGE (Search) -->
+        <section id="home-page" class="active-page">
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">Where do you want to go?</h1>
+                    <p class="hero-subtitle">Discover the fastest, cheapest, and easiest travel combinations globally.
+                    </p>
+
+                    <div class="search-form-container glass-panel">
+                        <form id="main-search-form" class="search-form">
+                            <div class="input-group" style="position: relative;">
+                                <label for="origin"><i class='bx bx-map-pin'></i> From</label>
+                                <input type="text" id="origin" name="origin" placeholder="Origin city or airport"
+                                    required autocomplete="off">
+                                <ul id="origin-suggestions" class="autocomplete-list"></ul>
+                            </div>
+
+                            <button type="button" class="swap-btn" title="Swap Locations" id="swap-btn-main">
+                                <i class='bx bx-transfer-alt'></i>
+                            </button>
+
+                            <div class="input-group" style="position: relative;">
+                                <label for="destination"><i class='bx bxs-map'></i> To</label>
+                                <input type="text" id="destination" name="destination" placeholder="Destination city"
+                                    required autocomplete="off">
+                                <ul id="destination-suggestions" class="autocomplete-list"></ul>
+                            </div>
+
+                            <div class="input-group date-input">
+                                <label for="date"><i class='bx bx-calendar'></i> Date (Optional)</label>
+                                <input type="date" id="date" name="date">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="preference"><i class='bx bx-brain'></i> Preference</label>
+                                <select id="preference" name="preference" style="padding: 12px; border: 1px solid var(--clr-border); border-radius: 8px; width: 100%; font-family: inherit; font-size: 1rem; color: var(--clr-dark);">
+                                    <option value="balanced">Balanced (Default)</option>
+                                    <option value="fastest">Fastest</option>
+                                    <option value="cheapest">Cheapest</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary search-btn">
+                                <i class='bx bx-search'></i> Search
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="popular-routes-section">
+                <h2 class="section-title">Popular Escapes</h2>
+                <div class="routes-grid">
+                    <div class="route-card mock-route" data-origin="Mumbai" data-dest="Goa">
+                        <img src="mumbai_goa.png"
+                            alt="Goa" loading="lazy">
+                        <div class="route-info">
+                            <h4>Mumbai &rarr; Goa</h4>
+                            <span class="route-time">from 1h 15m</span>
+                        </div>
+                    </div>
+                    <div class="route-card mock-route" data-origin="Delhi" data-dest="Jaipur">
+                        <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=400"
+                            alt="Jaipur" loading="lazy">
+                        <div class="route-info">
+                            <h4>Delhi &rarr; Jaipur</h4>
+                            <span class="route-time">from 4h 30m</span>
+                        </div>
+                    </div>
+                    <div class="route-card mock-route" data-origin="Bangalore" data-dest="Kochi">
+                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=400"
+                            alt="Kochi" loading="lazy">
+                        <div class="route-info">
+                            <h4>Bangalore &rarr; Kochi</h4>
+                            <span class="route-time">from 1h 10m</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS PAGE -->
+        <section id="results-page" class="hidden-page">
+            <div class="compact-search-bar">
+                <div class="compact-search-wrapper glass-panel-dark">
+                    <form id="compact-search-form" class="compact-form">
+                        <input type="text" id="compact-origin" placeholder="From" required autocomplete="off">
+                        <button type="button" class="swap-compact" id="swap-btn-compact"><i
+                                class='bx bx-transfer-alt'></i></button>
+                        <input type="text" id="compact-destination" placeholder="To" required autocomplete="off">
+                        <input type="date" id="compact-date">
+                        <select id="compact-preference" style="padding: 10px; border: 1px solid var(--clr-border); border-radius: 6px; font-family: inherit; font-size: 0.9rem; color: var(--clr-dark);">
+                            <option value="balanced">Balanced</option>
+                            <option value="fastest">Fastest</option>
+                            <option value="cheapest">Cheapest</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary compact-search-btn"><i class='bx bx-search'></i>
+                            Update</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="results-layout">
+                <div class="results-sidebar">
+                    <div class="sidebar-box glass-panel">
+                        <h3>Filter Results</h3>
+
+                        <div class="filter-group">
+                            <h4>Sort By</h4>
+                            <div class="custom-select-wrapper">
+                                <select id="sort-select" class="custom-select">
+                                    <option value="recommended">Best</option>
+                                    <option value="cheapest">Cheapest</option>
+                                    <option value="fastest">Fastest</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Transport Mode</h4>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked value="flight">
+                                <span class="checkmark"></span>
+                                <i class='bx bxs-plane-alt'></i> Flight
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked value="train">
+                                <span class="checkmark"></span>
+                                <i class='bx bx-train'></i> Train
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked value="bus">
+                                <span class="checkmark"></span>
+                                <i class='bx bx-bus'></i> Bus
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked value="car">
+                                <span class="checkmark"></span>
+                                <i class='bx bx-car'></i> Drive
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-list-wrapper">
+                    <div class="results-header">
+                        <h2 id="results-heading">Showing routes...</h2>
+                        <p id="results-subheading" class="text-muted"></p>
+                    </div>
+                    <div class="results-list" id="results-container">
+                        <!-- Dynamic mock results will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT PAGE -->
+        <section id="about-page" class="hidden-page">
+            <div class="hero-section"
+                style="min-height: 40vh; background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));">
+                <div class="hero-content">
+                    <h1 class="hero-title">About FindYourWay</h1>
+                    <p class="hero-subtitle" style="color: white;">We make traveling across India simpler, cheaper, and
+                        faster.</p>
+                </div>
+            </div>
+            <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-size: 1.1rem; color: var(--clr-text);">
+                <h2>Our Mission</h2>
+                <p style="margin-top: 15px; margin-bottom: 30px;">FindYourWay was built to solve the fragmentation of
+                    multimodal transit. By aggregating train schedules, bus lines, rideshares, and flights, we deliver
+                    door-to-door itineraries tailored exactly to your needs.</p>
+                <h2>Why Choose Us</h2>
+                <ul style="margin-top: 15px; padding-left: 20px; line-height: 1.8;">
+                    <li><strong>Comprehensive Coverage:</strong> Connecting major hubs like Delhi and Mumbai down to
+                        remote regional districts.</li>
+                    <li><strong>Transparent Pricing:</strong> Accurate rupees estimates without hidden fees.</li>
+                    <li><strong>Time-Saving:</strong> Instantly sort by the absolute fastest routes.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CONTACT PAGE -->
+        <section id="contact-page" class="hidden-page">
+            <div class="hero-section"
+                style="min-height: 40vh; background: linear-gradient(135deg, var(--clr-dark-light), var(--clr-dark));">
+                <div class="hero-content">
+                    <h1 class="hero-title">Contact Us</h1>
+                    <p class="hero-subtitle" style="color: var(--clr-border);">Have questions? We're here to help.</p>
+                </div>
+            </div>
+            <div style="max-width: 600px; margin: 40px auto; padding: 20px;">
+                <div class="glass-panel" style="background: var(--clr-white);">
+                    <form style="display: flex; flex-direction: column; gap: 20px;"
+                        onsubmit="event.preventDefault(); alert('Message sent!');">
+                        <div class="input-group">
+                            <label>Name</label>
+                            <input type="text" required placeholder="Your Name"
+                                style="border-bottom: 2px solid var(--clr-border);">
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" required placeholder="Your Email address"
+                                style="border-bottom: 2px solid var(--clr-border);">
+                        </div>
+                        <div class="input-group">
+                            <label>Message</label>
+                            <textarea required placeholder="How can we help?"
+                                style="border: none; border-bottom: 2px solid var(--clr-border); padding: 10px 0; outline: none; font-family: inherit; font-size: 1rem; resize: vertical; min-height: 100px;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- HISTORY PAGE -->
+        <section id="history-page" class="hidden-page">
+            <div class="hero-section"
+                style="min-height: 30vh; background: linear-gradient(135deg, var(--clr-secondary), var(--clr-primary));">
+                <div class="hero-content">
+                    <h1 class="hero-title">My Tickets</h1>
+                    <p class="hero-subtitle" style="color: white;">View and manage your booked tickets.</p>
+                </div>
+            </div>
+            <div style="max-width: 800px; margin: 40px auto; padding: 20px;">
+                <div id="history-container" style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Dynamic bookings go here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOKING PAGE -->
+        <section id="booking-page" class="hidden-page">
+            <div class="hero-section"
+                style="min-height: 40vh; background: linear-gradient(135deg, var(--clr-primary), var(--clr-dark));">
+                <div class="hero-content">
+                    <h1 class="hero-title">Complete Your Booking</h1>
+                    <p class="hero-subtitle" style="color: white;" id="booking-summary">Booking route...</p>
+                </div>
+            </div>
+            <div style="max-width: 600px; margin: 40px auto; padding: 20px;">
+                <div class="glass-panel" style="background: var(--clr-white);">
+                    <form id="booking-form" style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="input-group">
+                            <label>Passenger Name</label>
+                            <input type="text" id="passenger-name" required placeholder="Full Name"
+                                style="border-bottom: 2px solid var(--clr-border);">
+                        </div>
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="passenger-email" required placeholder="Email for ticket"
+                                style="border-bottom: 2px solid var(--clr-border);">
+                        </div>
+                        <div style="display: flex; gap: 20px;">
+                            <div class="input-group" style="flex: 2;">
+                                <label>Phone Number</label>
+                                <input type="tel" id="passenger-phone" required placeholder="Mobile Number"
+                                    style="border-bottom: 2px solid var(--clr-border);">
+                            </div>
+                            <div class="input-group" style="flex: 1;">
+                                <label>Age</label>
+                                <input type="number" id="passenger-age" required placeholder="Age" min="1" max="120"
+                                    style="border-bottom: 2px solid var(--clr-border);">
+                            </div>
+                            <div class="input-group" style="flex: 1.5;">
+                                <label>Gender</label>
+                                <select id="passenger-gender" required style="border: none; border-bottom: 2px solid var(--clr-border); background: transparent; padding: 8px 0; font-size: 1rem; font-family: var(--font-body); color: var(--clr-dark); outline: none; cursor: pointer;">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- PAYMENT SECTION -->
+                        <div class="payment-section" style="border-top: 1px dashed var(--clr-border); padding-top: 20px; margin-top: 10px;">
+                            <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: var(--clr-dark);">Payment Method</h3>
+                            <div style="display: flex; gap: 20px; margin-bottom: 15px;">
+                                <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                    <input type="radio" name="payment-method" value="upi" checked> UPI
+                                </label>
+                                <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                    <input type="radio" name="payment-method" value="card"> Credit/Debit Card
+                                </label>
+                            </div>
+
+                            <!-- UPI Fields -->
+                            <div id="upi-fields" class="input-group">
+                                <label>UPI ID</label>
+                                <input type="text" id="upi-id" placeholder="e.g. name@upi" style="border-bottom: 2px solid var(--clr-border);">
+                            </div>
+
+                            <!-- Card Fields -->
+                            <div id="card-fields" style="display: none;">
+                                <div class="input-group" style="margin-bottom: 15px;">
+                                    <label>Card Number</label>
+                                    <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" style="border-bottom: 2px solid var(--clr-border);">
+                                </div>
+                                <div style="display: flex; gap: 20px;">
+                                    <div class="input-group" style="flex: 1;">
+                                        <label>Expiry Date</label>
+                                        <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" style="border-bottom: 2px solid var(--clr-border);">
+                                    </div>
+                                    <div class="input-group" style="flex: 1;">
+                                        <label>CVV</label>
+                                        <input type="password" id="card-cvv" placeholder="123" maxlength="3" style="border-bottom: 2px solid var(--clr-border);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- TICKET MODAL -->
+    <div id="ticket-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div class="glass-panel"
+            style="background: var(--clr-white); padding: 30px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: fadeIn 0.3s ease;">
+            <button id="close-modal-btn"
+                style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--clr-text-muted); transition: color 0.3s;"><i
+                    class='bx bx-x'></i></button>
+            <h2
+                style="margin-top: 0; color: var(--clr-dark); font-family: var(--font-heading); border-bottom: 2px solid var(--clr-border); padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <i class='bx bxs-coupon' style="color: var(--clr-primary);"></i> Ticket Details
+            </h2>
+            <div id="ticket-details-content" style="font-size: 1rem; color: var(--clr-text); line-height: 1.8;">
+                <!-- Ticket details injected here -->
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="window.print()"><i
+                    class='bx bx-printer'></i> Print Ticket</button>
+        </div>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div class="glass-panel"
+            style="background: var(--clr-white); padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: fadeIn 0.3s ease;">
+            <button id="close-auth-btn"
+                style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--clr-text-muted); transition: color 0.3s;"><i
+                    class='bx bx-x'></i></button>
+            
+            <!-- Login Form -->
+            <div id="login-section">
+                <h2 style="margin-top: 0; color: var(--clr-dark); font-family: var(--font-heading); margin-bottom: 20px;">Welcome Back</h2>
+                <form id="login-form" style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="login-email" required placeholder="Enter your email" style="border-bottom: 2px solid var(--clr-border);">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required placeholder="Enter your password" style="border-bottom: 2px solid var(--clr-border);">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Login</button>
+                </form>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: var(--clr-text-muted);">
+                    Don't have an account? <a href="#" id="show-signup" style="color: var(--clr-primary); font-weight: bold;">Sign Up</a>
+                </p>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signup-section" style="display: none;">
+                <h2 style="margin-top: 0; color: var(--clr-dark); font-family: var(--font-heading); margin-bottom: 20px;">Create Account</h2>
+                <form id="signup-form" style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" id="signup-name" required placeholder="Full Name" style="border-bottom: 2px solid var(--clr-border);">
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="signup-email" required placeholder="Enter your email" style="border-bottom: 2px solid var(--clr-border);">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="signup-password" required minlength="6" placeholder="Min 6 characters" style="border-bottom: 2px solid var(--clr-border);">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Sign Up</button>
+                </form>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: var(--clr-text-muted);">
+                    Already have an account? <a href="#" id="show-login" style="color: var(--clr-primary); font-weight: bold;">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
